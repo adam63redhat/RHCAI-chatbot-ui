@@ -43,6 +43,8 @@ export const KnowledgeSourceFlyoutForm: React.FunctionComponent<KnowledgeSourceF
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [embeddingType, setEmbeddingType] = React.useState('nomic');
+  const [maxResults, setMaxResults] = React.useState('10');
+  const [minScore, setMinScore] = React.useState('0.7');
 
   // Elasticsearch Specific
   const [index, setIndex] = React.useState('');
@@ -98,6 +100,24 @@ export const KnowledgeSourceFlyoutForm: React.FunctionComponent<KnowledgeSourceF
     setPassword(password);
   };
 
+  const handleMaxResultsChange = (_event, maxResults: string) => {
+    const parsed = parseInt(maxResults, 10);
+    if (isNaN(parsed) || parsed < 1) {
+      setValidated('error')
+    } else {
+      setMaxResults(maxResults);
+    }
+  };
+
+  const handleMinScoreChange = (_event, minScore: string) => {
+    const parsed = parseFloat(minScore);
+    if (isNaN(parsed) || parsed < 0 || parsed > 1) {
+      setValidated('error')
+    } else {
+      setMinScore(minScore);
+    }
+  };
+
   const createKnowledgeSource = async () => {
 
     const elasticsearchConnection : ElasticsearchConnection = {
@@ -105,6 +125,8 @@ export const KnowledgeSourceFlyoutForm: React.FunctionComponent<KnowledgeSourceF
       index: index.trim() === '' ? null : index,
       username: username.trim() === '' ? null : username,
       password: password.trim() === '' ? null : password,
+      maxResults: maxResults === '' ? null : parseInt(maxResults, 10),
+      minScore: minScore === '' ? null : parseFloat(minScore),
       contentRetrieverType: "elasticsearch"
     }
 
@@ -242,6 +264,35 @@ export const KnowledgeSourceFlyoutForm: React.FunctionComponent<KnowledgeSourceF
               <FormHelperText>
                 <HelperText>
                   <HelperTextItem>Embedding Type of the Knowledge Source</HelperTextItem>
+                </HelperText>
+              </FormHelperText>
+            </FormGroup>
+
+            <FormGroup label="Max Results" fieldId="flyout-max-results">
+              <TextInput
+                type="number"
+                min={1}
+                id="flyout-max-results"
+                value={maxResults}
+                onChange={handleMaxResultsChange}
+              />
+              <FormHelperText>
+                <HelperText>
+                  <HelperTextItem>How many top results to retrieve (default 10)</HelperTextItem>
+                </HelperText>
+              </FormHelperText>
+            </FormGroup>
+
+            <FormGroup label="Min Score" fieldId="flyout-min-score">
+              <TextInput
+                type="text"
+                id="flyout-min-score"
+                value={minScore}
+                onChange={handleMinScoreChange}
+              />
+              <FormHelperText>
+                <HelperText>
+                  <HelperTextItem>A minimum score threshold, e.g. 0.7</HelperTextItem>
                 </HelperText>
               </FormHelperText>
             </FormGroup>

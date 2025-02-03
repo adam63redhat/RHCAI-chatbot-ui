@@ -548,6 +548,14 @@ components:
               type: string
             password:
               type: string
+            maxResults:
+              type: integer
+              nullable: true
+              minimum: 1
+            minScore:
+              type: number
+              format: float  # or double
+              nullable: true
     WeaviateConnection:
       type: object
       x-discriminator-value: weaviate
@@ -568,6 +576,14 @@ components:
               type: string
             apiKey:
               type: string
+            maxResults:
+              type: integer
+              nullable: true
+              minimum: 1
+            minScore:
+              type: number
+              format: float  # or double
+              nullable: true
     LLMConnection:
       type: object
       properties:
