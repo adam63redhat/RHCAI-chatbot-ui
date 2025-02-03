@@ -554,7 +554,7 @@ components:
               minimum: 1
             minScore:
               type: number
-              format: float  # or double
+              format: float
               nullable: true
     WeaviateConnection:
       type: object
@@ -582,7 +582,7 @@ components:
               minimum: 1
             minScore:
               type: number
-              format: float  # or double
+              format: float
               nullable: true
     LLMConnection:
       type: object
