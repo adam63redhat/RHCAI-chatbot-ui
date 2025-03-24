@@ -43,8 +43,8 @@ export const KnowledgeSourceFlyoutForm: React.FunctionComponent<KnowledgeSourceF
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [embeddingType, setEmbeddingType] = React.useState('nomic');
-  const [maxResults, setMaxResults] = React.useState('10');
-  const [minScore, setMinScore] = React.useState('0.7');
+  const [maxResults, setMaxResults] = React.useState('');
+  const [minScore, setMinScore] = React.useState('');
 
   // Elasticsearch Specific
   const [index, setIndex] = React.useState('');
